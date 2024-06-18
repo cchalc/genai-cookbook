@@ -49,10 +49,10 @@ data_pipeline_config = {
     # Tested configurations are available in the `supported_configs/embedding_models` Notebook
     "embedding_config": {
         # Model Serving endpoint name
-        "embedding_endpoint_name": "databricks-gte-large-en",
+        "embedding_endpoint_name": "cjc-bge-small",
         "embedding_tokenizer": {
             # Name of the embedding model that the tokenizer recognizes
-            "tokenizer_model_name": "Alibaba-NLP/gte-large-en-v1.5",
+            "tokenizer_model_name": "BAAI/bge-small-en-v1.5",
             # Name of the tokenizer, either `hugging_face` or `tiktoken`
             "tokenizer_source": "hugging_face",
         },
@@ -69,8 +69,8 @@ data_pipeline_config = {
         "chunker": {
             "name": "langchain_recursive_char",
             "config": {
-                "chunk_size_tokens": 1024,
-                "chunk_overlap_tokens": 256,
+                "chunk_size_tokens": 512,
+                "chunk_overlap_tokens": 128,
             },
         },
     },
@@ -161,7 +161,7 @@ rag_chain_config = {
         "vector_search_endpoint_name": VECTOR_SEARCH_ENDPOINT,
         # Databricks Model Serving endpoint name
         # This is the generator LLM where your LLM queries are sent.
-        "llm_endpoint_name": "databricks-dbrx-instruct",
+        "llm_endpoint_name": "cjc-llama2",
     },
     "retriever_config": {
         # Vector Search index that is created by the data pipeline

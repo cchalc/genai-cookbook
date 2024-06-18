@@ -400,34 +400,50 @@ vsc = VectorSearchClient(disable_notice=True)
 # COMMAND ----------
 
 # DBTITLE 1,Index Management Workflow
-force_delete = False
+# force_delete = False
 
-def find_index(endpoint_name, index_name):
-    all_indexes = vsc.list_indexes(name=VECTOR_SEARCH_ENDPOINT).get("vector_indexes", [])
-    return destination_tables_config["vectorsearch_index_name"] in map(lambda i: i.get("name"), all_indexes)
+# def find_index(endpoint_name, index_name):
+#     all_indexes = vsc.list_indexes(name=VECTOR_SEARCH_ENDPOINT).get("vector_indexes", [])
+#     return destination_tables_config["vectorsearch_index_name"] in map(lambda i: i.get("name"), all_indexes)
 
-if find_index(endpoint_name=VECTOR_SEARCH_ENDPOINT, index_name=destination_tables_config["vectorsearch_index_name"]):
-    if force_delete:
-        vsc.delete_index(endpoint_name=VECTOR_SEARCH_ENDPOINT, index_name=destination_tables_config["vectorsearch_index_name"])
-        create_index = True
-    else:
-        create_index = False
-else:
-    create_index = True
+# if find_index(endpoint_name=VECTOR_SEARCH_ENDPOINT, index_name=destination_tables_config["vectorsearch_index_name"]):
+#     if force_delete:
+#         vsc.delete_index(endpoint_name=VECTOR_SEARCH_ENDPOINT, index_name=destination_tables_config["vectorsearch_index_name"])
+#         create_index = True
+#     else:
+#         create_index = False
+# else:
+#     create_index = True
 
-if create_index:
-    print("Embedding docs & creating Vector Search Index, this can take 15 minutes or much longer if you have a larger number of documents.")
-    print(f'Check status at: {get_table_url(destination_tables_config["vectorsearch_index_name"])}')
+# if create_index:
+#     print("Embedding docs & creating Vector Search Index, this can take 15 minutes or much longer if you have a larger number of documents.")
+#     print(f'Check status at: {get_table_url(destination_tables_config["vectorsearch_index_name"])}')
 
-    vsc.create_delta_sync_index_and_wait(
-        endpoint_name=VECTOR_SEARCH_ENDPOINT,
-        index_name=destination_tables_config["vectorsearch_index_name"],
-        primary_key="chunk_id",
-        source_table_name=destination_tables_config["chunked_docs_table_name"],
-        pipeline_type=vectorsearch_config['pipeline_type'],
-        embedding_source_column="chunked_text",
-        embedding_model_endpoint_name=embedding_config['embedding_endpoint_name']
-    )
+#     vsc.create_delta_sync_index_and_wait(
+#         endpoint_name=VECTOR_SEARCH_ENDPOINT,
+#         index_name=destination_tables_config["vectorsearch_index_name"],
+#         primary_key="chunk_id",
+#         source_table_name=destination_tables_config["chunked_docs_table_name"],
+#         pipeline_type=vectorsearch_config['pipeline_type'],
+#         embedding_source_column="chunked_text",
+#         embedding_model_endpoint_name=embedding_config['embedding_endpoint_name']
+#     )
+
+# tag_delta_table(destination_tables_config["vectorsearch_index_name"], data_pipeline_config)
+
+# COMMAND ----------
+
+Don't run all. Check this first.
+
+vsc.create_delta_sync_index_and_wait(
+    endpoint_name=VECTOR_SEARCH_ENDPOINT,
+    index_name=destination_tables_config["vectorsearch_index_name"],
+    primary_key="chunk_id",
+    source_table_name=destination_tables_config["chunked_docs_table_name"],
+    pipeline_type=vectorsearch_config['pipeline_type'],
+    embedding_source_column="chunked_text",
+    embedding_model_endpoint_name=embedding_config['embedding_endpoint_name']
+)
 
 tag_delta_table(destination_tables_config["vectorsearch_index_name"], data_pipeline_config)
 
@@ -475,3 +491,7 @@ chain_config = {
 mlflow.log_dict(chain_config, "chain_config.json")
 
 mlflow.end_run()
+
+# COMMAND ----------
+
+

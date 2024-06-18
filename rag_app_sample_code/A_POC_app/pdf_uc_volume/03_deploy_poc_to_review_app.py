@@ -140,7 +140,7 @@ print(f"\n\nReview App: {deployment_info.review_app_url}")
 
 # COMMAND ----------
 
-user_list = ["eric.peter@databricks.com"]
+user_list = ["christopher.chalcraft@databricks.com"]
 
 # Set the permissions.  If successful, there will be no return value.
 agents.set_permissions(model_name=UC_MODEL_NAME, users=user_list, permission_level=agents.PermissionLevel.CAN_QUERY)
@@ -162,3 +162,7 @@ active_deployments = agents.list_deployments()
 active_deployment = next((item for item in active_deployments if item.model_name == UC_MODEL_NAME), None)
 
 print(f"Review App URL: {active_deployment.review_app_url}")
+
+# COMMAND ----------
+
+
