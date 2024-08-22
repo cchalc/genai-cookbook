@@ -26,6 +26,11 @@ browser_url = du.get_browser_hostname()
 # COMMAND ----------
 
 # MAGIC %md
+# MAGIC
+
+# COMMAND ----------
+
+# MAGIC %md
 # MAGIC ## Check if configured locations exist
 # MAGIC
 # MAGIC If not, creates:
