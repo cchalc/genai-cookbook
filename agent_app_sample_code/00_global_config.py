@@ -19,6 +19,10 @@ user_name = user_email.split("@")[0].replace(".", "").lower()[:35]
 
 # COMMAND ----------
 
+print(user_name)
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC ## Agent configuration
 # MAGIC
@@ -39,7 +43,8 @@ AGENT_NAME = "my_agent_app"
 # UC Catalog & Schema where outputs tables/indexes are saved
 # By default, will use the current user name to create a unique UC catalog/schema & vector search endpoint
 # If this catalog/schema does not exist, you need create catalog/schema permissions.
-UC_CATALOG = f"{user_name}_catalog"
+# UC_CATALOG = f"{user_name}_catalog"
+UC_CATALOG = "cjc"
 UC_SCHEMA = f"cookbook"
 
 ## UC Model name where the Agent's model is logged
